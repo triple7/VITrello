@@ -1,0 +1,3 @@
+DROP TABLE members;
+CREATE TABLE members(memberID varchar(255) NOT NULL, token varchar(255) NOT NULL);
+GRANT ALL PRIVILEGES ON oseyeris_Vlack TO 'oseyeris_Vlack'@'localhost';
