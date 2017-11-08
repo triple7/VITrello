@@ -1,7 +1,7 @@
 # VITrello
 Complete swift wrapper for the Trello API
 
-#Introduction
+# Introduction
 First, some acknowledgement to Joel Fischer who started the initiative with HelloTrello which is my starting point for this wrapper [repo here](https://github.com/livio/HelloTrello "HelloTrello swift library"). We have agreed to push this version to a different repo as there are enough changes to make it a completely different library. Just to be clear on this front :) 
 
 HelloTrello consists of a set of enums and functions to get certain objects from the trello API using the Alamofire pod which is an elegant HTTP request library for swift. It is however limited to a few objects and only for retrieving data. 
@@ -35,15 +35,15 @@ So far, this is a 6 point traversal through the network, which I find a bit hars
 The push to the APN server is performed by APNSPHP [Repo here](https://github.com/immobiliare/ApnsPHP "PHP scripts for the APN service")
 
 
-#Setup
+# Setup
 
-#h2 trello API key and Tokens
+## trello API key and Tokens
 
 You need to create both a developer's API key and authorisation token for single devices. the process is explained [here](https://trello.com/app-key)
 
 Once you got these, change the keys in APIManager.swift to reflect your own access authorisations.
 
-#h2 Server-side components
+## Server-side components
 
 These include:
 1. db.txt: import this file into your SQL database
@@ -61,7 +61,7 @@ For the above, you need to change Trello.swift and provide your own server's URL
 
 Also, change user, pass and db in webhook.php with the same credentials.
 
-#h2 APNS service
+## APNS service
 
 This is the lengthier part, but I have broken it down to each process with the best step by step guides I found on the net:
 1. register your app bundle for push notification [Apple developer website](https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/APNSOverview.html#//apple_ref/doc/uid/TP40008194-CH8-SW1)
@@ -69,7 +69,7 @@ This is the lengthier part, but I have broken it down to each process with the b
 3. Save and transform the certificate authority and private keys into one .pem file (command line below)
 4. put those files in the same directory as all the .php scripts and change the file names in the APNSPHP class push.php
 
-#h3 .p12 to .pem conversion
+### .p12 to .pem conversion
 
 Here is the command to type in terminal once you have saved both authority and private key to one single .p12 file:
 
@@ -84,7 +84,7 @@ $push = new ApnsPHP_Push(
 $push->setRootCertificationAuthority('GeoTrust_Global_CA.pem');
 
 
-#h1 The swift data model:
+# The swift data model:
 
 As the trello documentation says, the hierarchy for trello objects are as in the following vector:
 
@@ -92,11 +92,11 @@ organization > board > cardlist > card > checklist > checkItem
 
 To keep to this model, I've coded the classes so that each object automatically requests any existing child objects upon first loading organizations (teams).
 
-#h1 AppDelegate
+# AppDelegate
 
 Depending on the platform you will be using, the functions differ in form but not function. For the purpose of this guide, I have added a mac OS appDelegate.swift. You will need to implement your own callback function whenever a new notification arrives from the APN server.
 
-#The info.plist file
+# The info.plist file
 
 The provided info.plist allows requests to be passed through unsecure http for the purpose of testing, but Apple will request a secure https connection for production. To this effect, you need to specify your domain in the .plist file as per vbelow:
 
@@ -111,7 +111,7 @@ The provided info.plist allows requests to be passed through unsecure http for t
 		</dict>
 	</dict>
  
-#Further enhancements
+# Further enhancements
 
 Although I have tried to make this as comprehensive as possible in 3 weeks between work, life and other stuff, there are still some details missing which I invite anyone to complete for the benefit of all. These are:
 
@@ -123,6 +123,6 @@ Although I have tried to make this as comprehensive as possible in 3 weeks betwe
 6. add more security to server sides
 7. Add some powerups and tags objects (the latter is still experimental as of today)
 
-#License
+# License
 
 This is open source and I encourage anyone with more coding hours to make this better, more efficient, less memory intensive, etc etc so that we can easily plug the trello API into various innovative scenarios by piggy backing on a robust organisational service.
